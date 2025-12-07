@@ -15,7 +15,7 @@ export const App = () => {
           data.map((i: any) => ({
             ...i,
             date: new Date(i.date ?? i.createdAt),
-          }))
+          })),
         )
       );
   };

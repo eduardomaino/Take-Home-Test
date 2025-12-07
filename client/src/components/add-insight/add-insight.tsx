@@ -4,7 +4,7 @@ import { Modal, type ModalProps } from "../modal/modal.tsx";
 import styles from "./add-insight.module.css";
 
 type AddInsightProps = ModalProps & {
-  onInsightAdded?: () => void;   // ✅ optional callback
+  onInsightAdded?: () => void; // ✅ optional callback
 };
 
 export const AddInsight = ({ onInsightAdded, ...props }: AddInsightProps) => {
@@ -29,8 +29,8 @@ export const AddInsight = ({ onInsightAdded, ...props }: AddInsightProps) => {
       return;
     }
 
-    onInsightAdded?.();   // ✅ refresh insights
-    props.onClose?.();    // ✅ close modal
+    onInsightAdded?.(); // ✅ refresh insights
+    props.onClose?.(); // ✅ close modal
   };
 
   return (

@@ -22,7 +22,8 @@ describe("deleteInsight", () => {
       });
 
       it("removes the insight from the database", () => {
-        const rows = fixture.db.sql`SELECT * FROM insights WHERE id = ${insight.id}`;
+        const rows = fixture.db
+          .sql`SELECT * FROM insights WHERE id = ${insight.id}`;
         expect(rows).toHaveLength(0);
       });
     });
@@ -44,7 +45,8 @@ describe("deleteInsight", () => {
 
         deleteInsight({ ...fixture, id: 999999 }); // non-existent
 
-        const rows = fixture.db.sql`SELECT * FROM insights WHERE id = ${kept.id}`;
+        const rows = fixture.db
+          .sql`SELECT * FROM insights WHERE id = ${kept.id}`;
         expect(rows).toHaveLength(1);
       });
     });

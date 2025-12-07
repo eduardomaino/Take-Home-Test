@@ -57,12 +57,11 @@ router.post("/insights", async (ctx) => {
     ctx.response.status = 201;
     ctx.response.body = insight;
   } catch (err) {
-    console.error("Error in POST /insights:", err);
+    const message = err instanceof Error ? err.message : "Unknown server error";
     ctx.response.status = 500;
-    ctx.response.body = { error: err.message };
+    ctx.response.body = { error: message };
   }
 });
-
 
 router.delete("/insights/:id", (ctx) => {
   const id = Number(ctx.params.id);

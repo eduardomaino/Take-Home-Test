@@ -22,7 +22,7 @@ const createInsight = (input: Input): Insight => {
 
   return {
     id: Number(lastInsertRowId),
-    brand: brandId,        // ← note: column is "brand", not "brandId"
+    brand: brandId,
     text: text.trim(),
     createdAt: new Date(now),
   };

@@ -29,7 +29,8 @@ describe("addInsight", () => {
       });
 
       it("actually persists the insight in the database", () => {
-        const rows = fixture.db.sql`SELECT * FROM insights WHERE id = ${created.id}`;
+        const rows = fixture.db
+          .sql`SELECT * FROM insights WHERE id = ${created.id}`;
         expect(rows).toHaveLength(1);
         expect(rows[0]).toMatchObject({
           brand: 42,

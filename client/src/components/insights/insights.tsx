@@ -13,7 +13,6 @@ type InsightsProps = {
 const getBrandName = (id: number) =>
   BRANDS.find((b) => b.id === id)?.name ?? `Undefined Brand: ${id}`;
 
-
 export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
   const deleteInsight = async (id: number) => {
     const res = await fetch(`/api/insights/${id}`, { method: "DELETE" });
@@ -31,16 +30,16 @@ export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
       <div className={styles.list}>
         {insights?.length
           ? (
-            insights.map(({ id, text, date, brandId }) => (
+            insights.map(({ id, text, createdAt, brand }) => (
               <div className={styles.insight} key={id}>
                 <div className={styles["insight-meta"]}>
-                  <span>{getBrandName(brandId)}</span>
+                  <span>{getBrandName(brand)}</span>
                   <div className={styles["insight-meta-details"]}>
-                    <span>{date.toLocaleString()}</span>
+                    <span>{createdAt.toLocaleString()}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={() => deleteInsight(id)}
-
+                      onClick={() =>
+                        deleteInsight(id)}
                     />
                   </div>
                 </div>
