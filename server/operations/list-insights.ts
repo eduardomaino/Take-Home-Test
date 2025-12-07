@@ -11,8 +11,7 @@ export default (input: Input): Insight[] => {
 
   const result: Insight[] = rows.map((row) => ({
     ...row,
-    date: new Date(row.createdAt),
-    brandId: row.brand,
+    createdAt: new Date(row.createdAt)
   }));
 
   console.log("Retrieved insights successfully: ", result);
