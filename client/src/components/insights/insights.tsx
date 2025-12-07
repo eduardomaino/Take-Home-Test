@@ -7,15 +7,24 @@ import { BRANDS } from "../../lib/consts.ts";
 type InsightsProps = {
   insights: Insight[];
   className?: string;
+  onDelete: (id: number) => void;
 };
 
 const getBrandName = (id: number) =>
   BRANDS.find((b) => b.id === id)?.name ?? `Undefined Brand: ${id}`;
 
 
-export const Insights = ({ insights, className }: InsightsProps) => {
-  const deleteInsight = () => undefined;
+export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
+  const deleteInsight = async (id: number) => {
+    const res = await fetch(`/api/insights/${id}`, { method: "DELETE" });
 
+    if (!res.ok) {
+      console.error("Failed to delete insight");
+      return;
+    }
+
+    onDelete(id); // ✅ update UI locally
+  };
   return (
     <div className={cx(className)}>
       <h1 className={styles.heading}>Insights</h1>
@@ -30,7 +39,8 @@ export const Insights = ({ insights, className }: InsightsProps) => {
                     <span>{date.toLocaleString()}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={deleteInsight}
+                      onClick={() => deleteInsight(id)}
+
                     />
                   </div>
                 </div>

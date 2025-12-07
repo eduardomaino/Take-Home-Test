@@ -20,10 +20,14 @@ export const App = () => {
       );
   }, []);
 
+  const handleDelete = (id: number) => {
+    setInsights((prev) => prev.filter((i) => i.id !== id));
+  };
+
   return (
     <main className={styles.main}>
       <Header />
-      <Insights className={styles.insights} insights={insights} />
+      <Insights className={styles.insights} insights={insights} onDelete={handleDelete} />
     </main>
   );
 };

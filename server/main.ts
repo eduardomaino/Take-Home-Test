@@ -6,6 +6,7 @@ import { Port } from "../lib/utils/index.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
 import addInsight from "./operations/add-insight.ts";
+import deleteInsight from "./operations/delete-insight.ts";
 
 console.log("Loading configuration");
 
@@ -63,8 +64,21 @@ router.post("/insights", async (ctx) => {
 });
 
 
-router.get("/insights/delete", (ctx) => {
-  // TODO
+router.delete("/insights/:id", (ctx) => {
+  const id = Number(ctx.params.id);
+
+  const result = deleteInsight({
+    db,
+    id,
+  });
+
+  if (!result.ok) {
+    ctx.response.status = 404;
+    ctx.response.body = { error: "Insight not found" };
+    return;
+  }
+
+  ctx.response.body = { ok: true };
 });
 
 const app = new oak.Application();
