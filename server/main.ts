@@ -2,6 +2,7 @@
 import { Database } from "@db/sqlite";
 import * as oak from "@oak/oak";
 import * as path from "@std/path";
+import { initDb } from "./db-init.ts";
 import { Port } from "../lib/utils/index.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
@@ -17,7 +18,7 @@ const dbFilePath = path.resolve("tmp", "db.sqlite3");
 console.log(`Opening SQLite database at ${dbFilePath}`);
 
 await Deno.mkdir(path.dirname(dbFilePath), { recursive: true });
-const db = new Database(dbFilePath);
+const db = initDb(dbFilePath);
 
 console.log("Initialising server");
 
