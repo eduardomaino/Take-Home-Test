@@ -27,7 +27,7 @@ export const Insights = ({ insights, className }: InsightsProps) => {
                 <div className={styles["insight-meta"]}>
                   <span>{getBrandName(brandId)}</span>
                   <div className={styles["insight-meta-details"]}>
-                    <span>{date.toString()}</span>
+                    <span>{date.toLocaleString()}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
                       onClick={deleteInsight}
