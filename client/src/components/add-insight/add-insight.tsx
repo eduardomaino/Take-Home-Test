@@ -3,9 +3,11 @@ import { Button } from "../button/button.tsx";
 import { Modal, type ModalProps } from "../modal/modal.tsx";
 import styles from "./add-insight.module.css";
 
-type AddInsightProps = ModalProps;
+type AddInsightProps = ModalProps & {
+  onInsightAdded?: () => void;   // ✅ optional callback
+};
 
-export const AddInsight = (props: AddInsightProps) => {
+export const AddInsight = ({ onInsightAdded, ...props }: AddInsightProps) => {
   const addInsight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,7 +29,8 @@ export const AddInsight = (props: AddInsightProps) => {
       return;
     }
 
-    props.onClose?.(); // close modal if your Modal supports it
+    onInsightAdded?.();   // ✅ refresh insights
+    props.onClose?.();    // ✅ close modal
   };
 
   return (
@@ -43,6 +46,7 @@ export const AddInsight = (props: AddInsightProps) => {
             ))}
           </select>
         </label>
+
         <label className={styles.field}>
           Insight
           <textarea
@@ -51,6 +55,7 @@ export const AddInsight = (props: AddInsightProps) => {
             placeholder="Something insightful..."
           />
         </label>
+
         <Button className={styles.submit} type="submit" label="Add insight" />
       </form>
     </Modal>

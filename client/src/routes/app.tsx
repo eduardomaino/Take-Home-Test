@@ -7,7 +7,7 @@ import type { Insight } from "../schemas/insight.ts";
 export const App = () => {
   const [insights, setInsights] = useState<Insight[]>([]);
 
-  useEffect(() => {
+  const loadInsights = () => {
     fetch("/api/insights")
       .then((res) => res.json())
       .then((data) =>
@@ -18,6 +18,10 @@ export const App = () => {
           }))
         )
       );
+  };
+
+  useEffect(() => {
+    loadInsights();
   }, []);
 
   const handleDelete = (id: number) => {
@@ -26,8 +30,12 @@ export const App = () => {
 
   return (
     <main className={styles.main}>
-      <Header />
-      <Insights className={styles.insights} insights={insights} onDelete={handleDelete} />
+      <Header onInsightAdded={loadInsights} />
+      <Insights
+        className={styles.insights}
+        insights={insights}
+        onDelete={handleDelete}
+      />
     </main>
   );
 };
