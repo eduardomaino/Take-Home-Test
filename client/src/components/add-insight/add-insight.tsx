@@ -6,7 +6,29 @@ import styles from "./add-insight.module.css";
 type AddInsightProps = ModalProps;
 
 export const AddInsight = (props: AddInsightProps) => {
-  const addInsight = () => undefined;
+  const addInsight = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const brandId = (form.elements[0] as HTMLSelectElement).value;
+    const text = (form.elements[1] as HTMLTextAreaElement).value;
+
+    const res = await fetch("/api/insights", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        brandId: Number(brandId),
+        text,
+      }),
+    });
+
+    if (!res.ok) {
+      console.error("Failed to add insight");
+      return;
+    }
+
+    props.onClose?.(); // close modal if your Modal supports it
+  };
 
   return (
     <Modal {...props}>

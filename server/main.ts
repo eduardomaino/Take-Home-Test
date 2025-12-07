@@ -1,11 +1,11 @@
 // deno-lint-ignore-file no-explicit-any
-import { Database } from "@db/sqlite";
 import * as oak from "@oak/oak";
 import * as path from "@std/path";
 import { initDb } from "./db-init.ts";
 import { Port } from "../lib/utils/index.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
+import addInsight from "./operations/add-insight.ts";
 
 console.log("Loading configuration");
 
@@ -42,9 +42,26 @@ router.get("/insights/:id", (ctx) => {
   ctx.response.status = 200;
 });
 
-router.get("/insights/create", (ctx) => {
-  // TODO
+router.post("/insights", async (ctx) => {
+  try {
+    const body = await ctx.request.body.json();
+    const { brandId, text } = body;
+
+    const insight = addInsight({
+      db,
+      brandId: Number(brandId),
+      text,
+    });
+
+    ctx.response.status = 201;
+    ctx.response.body = insight;
+  } catch (err) {
+    console.error("Error in POST /insights:", err);
+    ctx.response.status = 500;
+    ctx.response.body = { error: err.message };
+  }
 });
+
 
 router.get("/insights/delete", (ctx) => {
   // TODO

@@ -5,9 +5,10 @@ export function initDb(dbFilePath: string) {
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS insights (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      content TEXT NOT NULL
+    id INTEGER PRIMARY KEY ASC NOT NULL,
+    brand INTEGER NOT NULL,
+    createdAt TEXT NOT NULL,
+    text TEXT NOT NULL
     );
   `);
 
